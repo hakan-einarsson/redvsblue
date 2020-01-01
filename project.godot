@@ -20,6 +20,8 @@ config/icon="res://icon.png"
 
 [display]
 
+window/size/width=819
+window/size/height=480
 window/size/resizable=false
 
 [input]
