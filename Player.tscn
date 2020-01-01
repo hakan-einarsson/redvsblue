@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/BluePlayer.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Background.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 17.8368, 18.8229 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=2]
 resource_name = "Falling"
 length = 0.5
 loop = true
@@ -23,8 +24,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Idle"
+[sub_resource type="Animation" id=3]
 length = 0.5
 loop = true
 tracks/0/type = "value"
@@ -40,8 +40,7 @@ tracks/0/keys = {
 "values": [ 5, 7 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "Jump"
+[sub_resource type="Animation" id=4]
 length = 0.5
 loop = true
 tracks/0/type = "value"
@@ -57,8 +56,7 @@ tracks/0/keys = {
 "values": [ 7 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "Shoot"
+[sub_resource type="Animation" id=5]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -73,8 +71,7 @@ tracks/0/keys = {
 "values": [ 8 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Walk"
+[sub_resource type="Animation" id=6]
 length = 0.5
 loop = true
 tracks/0/type = "value"
@@ -98,7 +95,6 @@ position = Vector2( -1.05116, -5.19746 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-editor/display_folded = true
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 vframes = 3
@@ -106,11 +102,11 @@ hframes = 3
 frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
-anims/Falling = SubResource( 6 )
-anims/Idle = SubResource( 2 )
-anims/Jump = SubResource( 3 )
-anims/Shoot = SubResource( 4 )
-anims/Walk = SubResource( 5 )
+anims/Falling = SubResource( 2 )
+anims/Idle = SubResource( 3 )
+anims/Jump = SubResource( 4 )
+anims/Shoot = SubResource( 5 )
+anims/Walk = SubResource( 6 )
 
 [node name="OnGroundCast" type="RayCast2D" parent="."]
 enabled = true
@@ -119,4 +115,17 @@ collision_mask = 4
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
+motion_scale = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 3 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

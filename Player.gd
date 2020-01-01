@@ -10,18 +10,27 @@ var shoot_timer=3
 var health = 100
 var shot_instance=load("res://Shot.tscn")
 var smoke_puff_scene=load("res://SmokePuff.tscn")
+var player_red=load("res://Assets/RedPlayer.png")
+var player_blue=load("res://Assets/RedPlayer.png")
 onready var anim_player=$Sprite/AnimationPlayer
 onready var sprite = $Sprite
 onready var on_ground_cast = $OnGroundCast
 onready var timer = $Timer
+var player_color= [load("res://Assets/RedPlayer.png"),
+					load("res://Assets/BluePlayer.png")]
 
 # var b = "text"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
+	sprite.set_texture(player_color[randi()%2])
 	pass # Replace with function body.
 	
 func _input(event):
+	
+	if event.is_action_pressed("ui_quit"):
+		get_tree().quit()
 	
 	if Input.is_action_pressed("ui_up") and is_on_floor:
 		speed.y=0
